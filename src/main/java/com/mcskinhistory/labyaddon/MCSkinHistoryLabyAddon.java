@@ -19,7 +19,8 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
     ArrayList<String> savedUUIDs;
     ArrayList<String> queue;
 
-    Thread thread;
+    Thread readThread;
+    Thread saveThread;
 
     /**
      * Called when the addon gets enabled
@@ -32,7 +33,8 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
 
             System.out.println("Loading Skin History addon");
 
-            thread = new Thread(new Runnable() {
+            // READ THREAD
+            readThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -66,9 +68,11 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
                     }
                 }
             }, "SH User Read Thread");
-            thread.start();
 
-            Thread saveThread = new Thread(new Runnable() {
+            this.readThread.start();
+
+            // SAVE THREAD
+            this.saveThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -107,7 +111,8 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
                     }
                 }
             }, "SH User Save Thread");
-            saveThread.start();
+
+            this.saveThread.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,8 +123,11 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
      */
     @Override
     public void onDisable() {
-        this.thread.interrupt();
-        this.thread = null;
+        this.readThread.interrupt();
+        this.readThread = null;
+
+        this.saveThread.interrupt();
+        this.saveThread = null;
     }
 
     /**
