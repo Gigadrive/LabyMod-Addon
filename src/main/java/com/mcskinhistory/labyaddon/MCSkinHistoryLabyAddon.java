@@ -76,7 +76,7 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
                                 String uuid = queue.get(0);
                                 System.out.println("SAVING: " + uuid);
 
-                                HttpURLConnection con = (HttpURLConnection) new URL("http://localhost:3000/api/playerData/" + uuid).openConnection();
+                                HttpURLConnection con = (HttpURLConnection) new URL("https://mcskinhistory.com/api/playerData/" + uuid).openConnection();
                                 con.setRequestMethod("GET");
                                 con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 
