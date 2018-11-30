@@ -2,9 +2,9 @@
   "uuid": "%uuid%",
   "name": "MCSkinHistoryLabyAddon",
   "mainClass": "com.mcskinhistory.labyaddon.MCSkinHistoryLabyAddon",
-  "description": "Saves all users to MCSkinHistory",
+  "description": "This addon saves all users you meet ingame to MCSkinHistory.com!",
   "version": 1,
   "author": "MCSkinHistory.com",
   "category": 2,
-  "icon": "https://i.imgur.com/7k2p3Vy.png"
+  "icon": "https://i.imgur.com/7svwXyu.png"
 }
