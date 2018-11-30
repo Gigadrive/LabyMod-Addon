@@ -7,6 +7,7 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -99,6 +100,8 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
                                 queue.remove(uuid);
                             }
                         }
+                    } catch (IOException e) {
+                        // ignored
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
