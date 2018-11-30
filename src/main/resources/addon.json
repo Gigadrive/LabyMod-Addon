@@ -1,0 +1,10 @@
+{
+  "uuid": "%uuid%",
+  "name": "MCSkinHistoryLabyAddon",
+  "mainClass": "com.mcskinhistory.labyaddon.MCSkinHistoryLabyAddon",
+  "description": "Saves all users to MCSkinHistory",
+  "version": 1,
+  "author": "MCSkinHistory.com",
+  "category": 2,
+  "icon": "https://i.imgur.com/7k2p3Vy.png"
+}

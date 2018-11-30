@@ -80,3 +80,9 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+reobf {
+    jar {
+        useNotchSrg()
+    }
+}
