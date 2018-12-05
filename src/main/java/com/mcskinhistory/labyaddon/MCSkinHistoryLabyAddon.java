@@ -2,6 +2,8 @@ package com.mcskinhistory.labyaddon;
 
 import net.labymod.api.LabyModAddon;
 import net.labymod.settings.elements.SettingsElement;
+import net.labymod.utils.Consumer;
+import net.labymod.utils.ServerData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -22,6 +24,8 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
     Thread readThread;
     Thread saveThread;
 
+	ArrayList<String> reportedIPs;
+
     /**
      * Called when the addon gets enabled
      */
@@ -30,6 +34,8 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
         try {
             savedUUIDs = new ArrayList<String>();
             queue = new ArrayList<String>();
+
+			reportedIPs = new ArrayList<String>();
 
             System.out.println("Loading Skin History addon");
 
@@ -113,6 +119,39 @@ public class MCSkinHistoryLabyAddon extends LabyModAddon {
             }, "SH User Save Thread");
 
             this.saveThread.start();
+
+			getApi().getEventManager().registerOnJoin(new Consumer<ServerData>() {
+				@Override
+				public void accept(ServerData server) {
+					try {
+						if (server != null) {
+							if (!reportedIPs.contains(server.getIp())) {
+								System.out.println("REPORTING SERVER " + server.getIp());
+
+								HttpURLConnection con = (HttpURLConnection) new URL("https://mcskinhistory.com/api/serverData/?ip=" + server.getIp()).openConnection();
+								con.setRequestMethod("GET");
+								con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+
+								con.connect();
+
+								BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+								String inputLine;
+								StringBuilder content = new StringBuilder();
+								while ((inputLine = in.readLine()) != null) {
+									content.append(inputLine);
+								}
+								in.close();
+
+								System.out.println(content.toString());
+
+								con.disconnect();
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
         } catch (Exception e) {
             e.printStackTrace();
         }
